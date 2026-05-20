@@ -13,7 +13,7 @@
                 &kp N0 &kp DOT &kp BSPC
                 &kp A  &kp B  &kp C  &kp D
                 &kp E  &kp F
-                &kp MUTE &kp PLAY_PAUSE
+                &kp C_MUTE &kp C_PP
             >;
             
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
