@@ -26,19 +26,19 @@
         diode-direction = "row2col";
 
         row-gpios
-            = <&pro_micro 1 GPIO_ACTIVE_HIGH> // D1
-            , <&pro_micro 0 GPIO_ACTIVE_HIGH> // D0
-            , <&pro_micro 2 GPIO_ACTIVE_HIGH> // D2
-            , <&pro_micro 3 GPIO_ACTIVE_HIGH> // D3
-            , <&pro_micro 4 GPIO_ACTIVE_HIGH> // D4
-            , <&pro_micro 5 GPIO_ACTIVE_HIGH> // D5
+            = <&pro_micro 1 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 0 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 2 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 3 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 4 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 5 GPIO_ACTIVE_HIGH>
             ;
 
         col-gpios
-            = <&pro_micro 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // D9
-            , <&pro_micro 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // D8
-            , <&pro_micro 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // D7
-            , <&pro_micro 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // D6
+            = <&pro_micro 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&pro_micro 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&pro_micro 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&pro_micro 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
     };
 
@@ -46,8 +46,8 @@
         compatible = "zmk,kscan-gpio-direct";
         label = "KSCAN_DIRECT";
         input-gpios
-            = <&pro_micro 20 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // SW1 按钮 D20
-            , <&pro_micro 23 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // SW2 按钮 D23
+            = <&pro_micro 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // 对应原理图 D20 (左旋钮按压)
+            , <&pro_micro 18 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // 对应原理图 D23 (右旋钮按压)
             ;
     };
 
@@ -69,16 +69,16 @@
     left_encoder: encoder_left {
         compatible = "alps,ec11";
         label = "LEFT_ENCODER";
-        a-gpios = <&pro_micro 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D21
-        b-gpios = <&pro_micro 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D22
+        a-gpios = <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // 对应原理图 D21
+        b-gpios = <&pro_micro 19 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // 对应原理图 D22
         resolution = <4>;
     };
 
     right_encoder: encoder_right {
         compatible = "alps,ec11";
         label = "RIGHT_ENCODER";
-        a-gpios = <&pro_micro 24 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D24
-        b-gpios = <&pro_micro 25 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D25
+        a-gpios = <&pro_micro 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // 对应原理图 D24
+        b-gpios = <&pro_micro 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // 对应原理图 D25
         resolution = <4>;
     };
 
