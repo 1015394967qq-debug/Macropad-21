@@ -46,8 +46,8 @@
         compatible = "zmk,kscan-gpio-direct";
         label = "KSCAN_DIRECT";
         input-gpios
-            = <&pro_micro 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // 对应原理图 D20 (左旋钮按压)
-            , <&pro_micro 18 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // 对应原理图 D23 (右旋钮按压)
+            = <&pro_micro 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> 
+            , <&pro_micro 18 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> 
             ;
     };
 
@@ -71,7 +71,7 @@
         label = "LEFT_ENCODER";
         a-gpios = <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&pro_micro 19 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <80>;  // 新版 ZMK 的标准写法（一圈 80 个物理电信号）
+        steps = <80>;
     };
 
     right_encoder: encoder_right {
@@ -79,11 +79,12 @@
         label = "RIGHT_ENCODER";
         a-gpios = <&pro_micro 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&pro_micro 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <80>;  // 新版 ZMK 的标准写法
+        steps = <80>;
     };
 
     sensors {
         compatible = "zmk,keymap-sensors";
         sensors = <&left_encoder &right_encoder>;
-        triggers-per-rotation = <20>;  // 一圈 20 次触发（对应旋钮的20个物理顿挫）
+        triggers-per-rotation = <20>;
     };
+};
