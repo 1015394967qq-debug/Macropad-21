@@ -13,7 +13,7 @@
 
             // 🚨 官方安全要求：必须包含 &studio_unlock 键值
             bindings = <
-                &kp N3           &kp N2       &kp N1         &kp N4
+                &bt BT_CLR_ALL   &out OUT_BLE &studio_unlock &kp N4
                 &kp N5           &kp N6       &kp N7         &kp N8
                 &kp N9           &kp N0       &kp Q          &kp W
                 &kp E            &kp R        &kp T
