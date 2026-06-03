@@ -2,8 +2,18 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/mouse.h> // 鼠标核心代码库
 
 / {
+    // 🌟 核心新增：专门给旋钮用的鼠标滚轮翻译器
+    behaviors {
+        inc_dec_msc: behavior_sensor_rotate_mouse_scroll {
+            compatible = "zmk,behavior-sensor-rotate-var";
+            #sensor-binding-cells = <2>;
+            bindings = <&msc>, <&msc>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -11,7 +21,7 @@
         // 层级 0：Base 基础层 (日常输入)
         // ==========================================
         default_layer {
-            // 🚨 官方 UI 渲染强制要求：必须给层命名
+            // 官方 UI 渲染强制要求：必须给层命名
             display-name = "Base";
 
             bindings = <
@@ -29,10 +39,10 @@
         };
 
         // ==========================================
-        // 层级 1：Function 功能层 (按住 Base 层的 &mo 1 触发)
+        // 层级 1：WINDOWS层 (按住 Base 层的 &mo 1 触发)
         // ==========================================
         fn_layer {
-            display-name = "Function";
+            display-name = "Win";
 
             // &trans 代表透明按键，按下去会直接穿透触发 Base 层同一位置的键位
             bindings = <
@@ -45,17 +55,17 @@
                 &trans           &trans
             >;
 
-            // 左旋钮：上一首/下一首 | 右旋钮：左右方向键
-            sensor-bindings = <&inc_dec_kp C_NEXT C_PREV &inc_dec_kp RIGHT LEFT>;
+            // 左旋钮：鼠标滚轮 | 右旋钮：页面上下滚动
+            sensor-bindings = <&inc_dec_msc SCRL_UP SCRL_DOWN &inc_dec_kp PG_UP PG_DN>;
         };
 
         // ==========================================
-        // 层级 2：System 系统层 (按住 Base 层的 &mo 2 触发)
+        // 层级 2：MAC层 (按住 Base 层的 &mo 2 触发)
         // ==========================================
         sys_layer {
-            display-name = "System";
+            display-name = "Mac";
 
-            // 🚨 官方安全要求：包含 &studio_unlock 键值，并集成蓝牙与主控管理
+            // 官方安全要求：包含 &studio_unlock 键值，并集成蓝牙与主控管理
             bindings = <
                 &bt BT_CLR_ALL   &bt BT_SEL 0     &bt BT_SEL 1     &out OUT_BLE
                 &studio_unlock   &bootloader      &sys_reset       &trans
@@ -66,8 +76,8 @@
                 &trans           &trans
             >;
 
-            // 左旋钮：屏幕亮度加减 | 右旋钮：音量加减
-            sensor-bindings = <&inc_dec_kp C_BRI_UP C_BRI_DN &inc_dec_kp C_VOL_UP C_VOL_DN>;
+            // 左旋钮：鼠标滚轮 | 右旋钮：页面上下滚动
+            sensor-bindings = <&inc_dec_msc SCRL_UP SCRL_DOWN &inc_dec_kp PG_UP PG_DN>;
         };
     };
 };
