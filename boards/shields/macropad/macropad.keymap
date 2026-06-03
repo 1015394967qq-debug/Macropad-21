@@ -5,21 +5,23 @@
 #include <dt-bindings/zmk/mouse.h> 
 
 / {
-    // 1. 用“宏”将带参数的滚轮动作打包成无参数的独立指令
     macros {
         m_scrl_up: m_scrl_up {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
+            wait-ms = <0>;      // 取消连滚时的等待间隙
+            tap-ms = <30>;      // 核心修复：强制按住 30 毫秒，让滚轮信号有足够时间发往电脑
             bindings = <&msc SCRL_UP>;
         };
         m_scrl_dn: m_scrl_dn {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <30>;      // 核心修复
             bindings = <&msc SCRL_DOWN>;
         };
     };
 
-    // 2. 让旋钮行为直接调用上面写好的宏
     behaviors {
         rot_scroll: behavior_sensor_rotate_scroll {
             compatible = "zmk,behavior-sensor-rotate";
