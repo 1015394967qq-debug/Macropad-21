@@ -5,31 +5,12 @@
 #include <dt-bindings/zmk/mouse.h> 
 
 / {
-    macros {
-        // 终极修复：手动拆解动作，强制注入真实延时
-        m_scrl_up: m_scrl_up {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <30>; // 👈 这里的 30ms 是两个动作之间的真实物理延时
-            bindings = 
-                <&macro_press &msc SCRL_UP>,   // 第一步：强行按下滚轮触发器
-                <&macro_release &msc SCRL_UP>; // 第二步：等待30ms后，再松开触发器
-        };
-        m_scrl_dn: m_scrl_dn {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <30>; 
-            bindings = 
-                <&macro_press &msc SCRL_DOWN>, 
-                <&macro_release &msc SCRL_DOWN>;
-        };
-    };
-
     behaviors {
         rot_scroll: behavior_sensor_rotate_scroll {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&m_scrl_up>, <&m_scrl_dn>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            tap-ms = <50>;  // 直接在旋钮行为中调用原生延时参数，让电脑有足够时间捕捉滚轮信号
         };
     };
 
