@@ -5,12 +5,26 @@
 #include <dt-bindings/zmk/mouse.h> 
 
 / {
+    // 1. 用“宏”将带参数的滚轮动作打包成无参数的独立指令
+    macros {
+        m_scrl_up: m_scrl_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&msc SCRL_UP>;
+        };
+        m_scrl_dn: m_scrl_dn {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&msc SCRL_DOWN>;
+        };
+    };
+
+    // 2. 让旋钮行为直接调用上面写好的宏
     behaviors {
-        // 基于官方文档：硬编码无参滚轮，防 ZMK Studio 屏蔽
         rot_scroll: behavior_sensor_rotate_scroll {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            bindings = <&m_scrl_up>, <&m_scrl_dn>;
         };
     };
 
@@ -48,7 +62,7 @@
                 &trans           &trans           &trans
                 &trans           &trans           &trans           &trans
                 &trans           &trans
-                &mkp LCLK        &mkp RCLK  // 标准鼠标左右键诱饵
+                &mkp LCLK        &mkp RCLK
             >;
 
             // 左旋钮：纯正鼠标滚轮 | 右旋钮：图层上下查看 (方向键)
@@ -61,13 +75,13 @@
         sys_layer {
             display-name = "Mac";
             bindings = <
-                &trans           &trans           &trans           &trans 
-                &trans           &trans           &trans           &trans      
+                &trans           &trans           &trans           &trans
+                &trans           &trans           &trans           &trans
                 &trans           &trans           &trans           &trans
                 &trans           &trans           &trans
                 &trans           &trans           &trans           &trans
                 &trans           &trans
-                &mkp LCLK        &mkp RCLK  // 标准鼠标左右键诱饵
+                &mkp LCLK        &mkp RCLK
             >;
 
             // 左旋钮：纯正鼠标滚轮 | 右旋钮：图层上下查看 (方向键)
