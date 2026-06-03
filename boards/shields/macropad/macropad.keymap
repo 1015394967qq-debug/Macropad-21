@@ -5,14 +5,16 @@
 #include <dt-bindings/zmk/mouse.h> 
 
 / {
-    // 旋钮专管鼠标滚动
     behaviors {
-        inc_dec_msc: behavior_sensor_rotate_mouse_scroll {
-            compatible = "zmk,behavior-sensor-rotate-var";
-            #sensor-binding-cells = <2>;
-            bindings = <&msc>, <&msc>;
+        // 自定义一个传感器行为，包装鼠标滚轮
+        rot_msc: sensor_rotate_mouse_scroll {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            // 如果你发现转动旋钮时滚动方向反了，把 UP 和 DOWN 换个位置即可
         };
     };
+};
 
     keymap {
         compatible = "zmk,keymap";
