@@ -85,7 +85,7 @@
                 &trans           &trans           &trans
                 &trans           &trans           &trans           &trans
                 &trans           &trans
-                &mkp LCLK        &mkp RCLK
+                &bootloader      &sys_reset
             >;
             sensor-bindings = <&rot_scroll &inc_dec_kp UP DOWN>;
         };
