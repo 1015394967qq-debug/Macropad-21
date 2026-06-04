@@ -1,36 +1,21 @@
+
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 100
+
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
-#include <dt-bindings/zmk/mouse.h> 
+
+#include <dt-bindings/zmk/pointing.h> 
 
 / {
-    macros {
-        // 1. 强制拆解的延时宏：保证滚轮信号有 30ms 的存活时间
-        m_scrl_up: m_scrl_up {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <30>; 
-            bindings = 
-                <&macro_press &msc SCRL_UP>,   
-                <&macro_release &msc SCRL_UP>; 
-        };
-        m_scrl_dn: m_scrl_dn {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <30>; 
-            bindings = 
-                <&macro_press &msc SCRL_DOWN>, 
-                <&macro_release &msc SCRL_DOWN>;
-        };
-    };
-
     behaviors {
-        // 2. 旋钮直接调用无参宏：防 ZMK Studio 屏蔽
         rot_scroll: behavior_sensor_rotate_scroll {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&m_scrl_up>, <&m_scrl_dn>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            // 
+            tap-ms = <50>;
         };
     };
 
@@ -43,11 +28,11 @@
         base_layer {
             display-name = "Base";
             bindings = <
-                &trans           &to 0            &to 1            &to 2
-                &trans           &trans           &trans           &trans
-                &kp KP_N7        &kp KP_N8        &kp KP_N9        &trans
+                &to 0            &to 1            &to 2            &to 3
+                &trans           &kp KP_DIVIDE    &kp KP_MULTIPLY  &kp KP_MINUS
+                &kp KP_N7        &kp KP_N8        &kp KP_N9        &kp KP_PLUS
                 &kp KP_N4        &kp KP_N5        &kp KP_N6
-                &kp KP_N1        &kp KP_N2        &kp KP_N3        &trans
+                &kp KP_N1        &kp KP_N2        &kp KP_N3        &kp KP_ENTER
                 &kp KP_N0        &kp KP_DOT
                 &kp C_MUTE       &kp C_PLAY_PAUSE
             >;
@@ -66,7 +51,7 @@
                 &trans           &trans           &trans
                 &trans           &trans           &trans           &trans
                 &trans           &trans
-                &mkp LCLK        &mkp RCLK  // 🌟 3. 鼠标驱动唤醒诱饵
+                &mkp LCLK        &mkp RCLK
             >;
             sensor-bindings = <&rot_scroll &inc_dec_kp UP DOWN>;
         };
@@ -83,7 +68,7 @@
                 &trans           &trans           &trans
                 &trans           &trans           &trans           &trans
                 &trans           &trans
-                &mkp LCLK        &mkp RCLK  // 🌟 3. 鼠标驱动唤醒诱饵
+                &mkp LCLK        &mkp RCLK
             >;
             sensor-bindings = <&rot_scroll &inc_dec_kp UP DOWN>;
         };
@@ -95,15 +80,14 @@
             display-name = "Set";
             bindings = <
                 &trans           &trans           &trans           &trans
-                &trans           &trans           &trans           &trans
+                &bt BT_SEL 0     &bt BT_SEL 1     &bt BT_SEL 2     &bt BT_SEL 3
                 &trans           &trans           &trans           &trans
                 &trans           &trans           &trans
                 &trans           &trans           &trans           &trans
                 &trans           &trans
-                &mkp LCLK        &mkp RCLK  // 🌟 3. 鼠标驱动唤醒诱饵
+                &mkp LCLK        &mkp RCLK
             >;
             sensor-bindings = <&rot_scroll &inc_dec_kp UP DOWN>;
         };
-
     };
 };
