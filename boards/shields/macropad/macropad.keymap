@@ -1,5 +1,5 @@
 
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 10
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 25
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
