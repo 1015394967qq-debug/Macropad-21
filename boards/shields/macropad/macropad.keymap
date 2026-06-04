@@ -92,7 +92,7 @@
         // 层级 3：设置层 
         // ==========================================
         set_layer {
-            display-name = "Mac";
+            display-name = "Set";
             bindings = <
                 &trans           &trans           &trans           &trans
                 &trans           &trans           &trans           &trans
