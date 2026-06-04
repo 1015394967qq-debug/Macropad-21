@@ -40,7 +40,7 @@
         // ==========================================
         // 层级 0：Base 基础层 
         // ==========================================
-        default_layer {
+        base_layer {
             display-name = "Base";
             bindings = <
                 &trans           &to 0            &to 1            &to 2
@@ -57,7 +57,7 @@
         // ==========================================
         // 层级 1：WINDOWS层
         // ==========================================
-        fn_layer {
+        win_layer {
             display-name = "Win";
             bindings = <
                 &trans           &trans           &trans           &trans
@@ -74,7 +74,7 @@
         // ==========================================
         // 层级 2：MAC层 
         // ==========================================
-        sys_layer {
+        mac_layer {
             display-name = "Mac";
             bindings = <
                 &trans           &trans           &trans           &trans
@@ -87,5 +87,23 @@
             >;
             sensor-bindings = <&rot_scroll &inc_dec_kp UP DOWN>;
         };
+
+        // ==========================================
+        // 层级 3：设置层 
+        // ==========================================
+        set_layer {
+            display-name = "Mac";
+            bindings = <
+                &trans           &trans           &trans           &trans
+                &trans           &trans           &trans           &trans
+                &trans           &trans           &trans           &trans
+                &trans           &trans           &trans
+                &trans           &trans           &trans           &trans
+                &trans           &trans
+                &mkp LCLK        &mkp RCLK  // 🌟 3. 鼠标驱动唤醒诱饵
+            >;
+            sensor-bindings = <&rot_scroll &inc_dec_kp UP DOWN>;
+        };
+
     };
 };
