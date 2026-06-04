@@ -5,16 +5,34 @@
 #include <dt-bindings/zmk/mouse.h> 
 
 / {
-    behaviors {
-        // 自定义一个传感器行为，包装鼠标滚轮
-        rot_msc: sensor_rotate_mouse_scroll {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
-            // 如果你发现转动旋钮时滚动方向反了，把 UP 和 DOWN 换个位置即可
+    macros {
+        // 1. 强制拆解的延时宏：保证滚轮信号有 30ms 的存活时间
+        m_scrl_up: m_scrl_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>; 
+            bindings = 
+                <&macro_press &msc SCRL_UP>,   
+                <&macro_release &msc SCRL_UP>; 
+        };
+        m_scrl_dn: m_scrl_dn {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>; 
+            bindings = 
+                <&macro_press &msc SCRL_DOWN>, 
+                <&macro_release &msc SCRL_DOWN>;
         };
     };
-};
+
+    behaviors {
+        // 2. 旋钮直接调用无参宏：防 ZMK Studio 屏蔽
+        rot_scroll: behavior_sensor_rotate_scroll {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&m_scrl_up>, <&m_scrl_dn>;
+        };
+    };
 
     keymap {
         compatible = "zmk,keymap";
@@ -48,10 +66,9 @@
                 &trans           &trans           &trans
                 &trans           &trans           &trans           &trans
                 &trans           &trans
-                &mkp LCLK        &mkp RCLK  // 👈 鼠标驱动唤醒诱饵（保持保留）
+                &mkp LCLK        &mkp RCLK  // 🌟 3. 鼠标驱动唤醒诱饵
             >;
-            // 👈 完美组合：用标准的带参行为，传入官方上下滚动指令
-            sensor-bindings = <&msc SCRL_UP SCRL_DOWN &inc_dec_kp UP DOWN>;
+            sensor-bindings = <&rot_scroll &inc_dec_kp UP DOWN>;
         };
 
         // ==========================================
@@ -66,9 +83,9 @@
                 &trans           &trans           &trans
                 &trans           &trans           &trans           &trans
                 &trans           &trans
-                &mkp LCLK        &mkp RCLK
+                &mkp LCLK        &mkp RCLK  // 🌟 3. 鼠标驱动唤醒诱饵
             >;
-            sensor-bindings = <&msc SCRL_UP SCRL_DOWN &inc_dec_kp UP DOWN>;
+            sensor-bindings = <&rot_scroll &inc_dec_kp UP DOWN>;
         };
     };
 };
