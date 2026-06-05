@@ -1,5 +1,5 @@
 
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 30
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 35
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -53,7 +53,7 @@
                 &trans           &trans
                 &mkp LCLK        &mkp RCLK
             >;
-            sensor-bindings = <&rot_scroll &inc_dec_kp UP DOWN>;
+            sensor-bindings = <&inc_dec_kp UP DOWN &rot_scroll>;
         };
 
         // ==========================================
@@ -70,7 +70,7 @@
                 &trans           &trans
                 &mkp LCLK        &mkp RCLK
             >;
-            sensor-bindings = <&rot_scroll &inc_dec_kp UP DOWN>;
+            sensor-bindings = <&inc_dec_kp UP DOWN &rot_scroll>;
         };
 
         // ==========================================
@@ -87,7 +87,7 @@
                 &trans           &trans
                 &bootloader      &sys_reset
             >;
-            sensor-bindings = <&rot_scroll &inc_dec_kp UP DOWN>;
+            sensor-bindings = <&inc_dec_kp UP DOWN &rot_scroll>;
         };
     };
 };
